@@ -21,7 +21,7 @@ function AddCustomer() {
     };
     const handleSubmit = async () => {
         try {
-            await axios.post("http://localhost:5000/api/customers/add", formData);
+            await axios.post("https://livetraq-backend.onrender.com/api/customers/add", formData);
 
             alert("Customer Saved ✅");
 
