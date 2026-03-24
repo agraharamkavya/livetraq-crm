@@ -1,24 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
+import { Routes, Route } from "react-router-dom";
+import Login from "./pages/Login";
+import Dashboard from "./pages/Dashboard";
+import AddCustomer from "./pages/AddCustomer";
+import CustomerList from "./pages/CustomerList";
+import CustomerDetails from "./pages/CustomerDetails";
+import EditCustomer from "./pages/EditCustomer";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Routes>
+      <Route path="/" element={<Login />} />
+      <Route
+         path="/dashboard"
+         element={
+          <ProtectedRoute>
+          <Dashboard />
+          </ProtectedRoute>
+         }
+/>
+      <Route path="/add-customer" element={<ProtectedRoute><AddCustomer /></ProtectedRoute>} />
+      <Route path="/customers" element={<ProtectedRoute><CustomerList /></ProtectedRoute>} />
+      <Route path="/customer/:id" element={<ProtectedRoute><CustomerDetails /></ProtectedRoute>} />
+      <Route path="/edit-customer/:id" element={<ProtectedRoute><EditCustomer /></ProtectedRoute>} />
+    </Routes>
   );
 }
 

@@ -1,0 +1,78 @@
+import { useNavigate } from "react-router-dom";
+function Dashboard() {
+      const navigate = useNavigate();
+      const handleLogout = () => {
+            localStorage.removeItem("token");
+            window.location.href = "/";
+            };
+  return (
+    <div className="flex h-screen bg-gray-100">
+
+      {/* Sidebar */}
+      <div className="w-64 bg-blue-600 text-white p-5">
+        <h2 className="text-2xl font-bold mb-8">Livetraq</h2>
+
+        <ul className="space-y-4">
+          <li className="cursor-pointer hover:bg-blue-500 p-2 rounded">
+            Dashboard
+          </li>
+          <li className="cursor-pointer hover:bg-blue-500 p-2 rounded">
+            Customer KYC
+          </li>
+          <li className="cursor-pointer hover:bg-blue-500 p-2 rounded">
+            Reports
+          </li>
+          <li className="cursor-pointer hover:bg-blue-500 p-2 rounded">
+            Settings
+          </li>
+        </ul>
+      </div>
+
+      {/* Main Content */}
+      <div className="flex-1 flex flex-col">
+
+        {/* Topbar */}
+        <div className="bg-white p-4 shadow flex justify-between">
+          <h1 className="text-xl font-semibold">Dashboard</h1>
+          <span>Kavya</span>
+        </div>
+
+        {/* Content */}
+        <div className="p-6">
+
+          <div className="bg-white p-6 rounded shadow mb-6">
+            <h2 className="text-lg font-semibold mb-4">
+              Welcome to Livetraq CRM
+            </h2>
+
+           <button
+            onClick={() => navigate("/add-customer")}
+            className="bg-blue-600 text-white px-4 py-2 rounded mr-4"
+            >
+            Add New Customer
+            </button>
+
+            <button
+            onClick={() => navigate("/customers")}
+            className="bg-green-600 text-white px-4 py-2 rounded mr-4"
+            >
+            View Customer List
+            </button>
+
+            <button
+            onClick={handleLogout}
+            className="bg-red-500 text-white px-4 py-2 rounded"
+             >
+            Logout
+            </button>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  );
+}
+
+export default Dashboard;
