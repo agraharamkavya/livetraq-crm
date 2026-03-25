@@ -8,8 +8,27 @@ function CustomerList() {
 
  useEffect(() => {
   const fetchCustomers = async () => {
-    const res = await axios.get("https://livetraq-backend.onrender.com/api/customers");
-    setCustomers(res.data);
+    try {
+      const res = await axios.get(
+        "https://livetraq-backend.onrender.com/api/customers",
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`
+          }
+        }
+      );
+
+      setCustomers(res.data);
+    } catch (err) {
+      console.error(err);
+
+      // 🔥 If token invalid → redirect to login
+      if (err.response && err.response.status === 401) {
+        alert("Session expired. Please login again.");
+        localStorage.removeItem("token");
+        navigate("/");
+      }
+    }
   };
 
   fetchCustomers();

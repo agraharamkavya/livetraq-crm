@@ -19,17 +19,30 @@ function AddCustomer() {
         [e.target.name]: e.target.value
     });
     };
-    const handleSubmit = async () => {
-        try {
-            await axios.post("https://livetraq-backend.onrender.com/api/customers/add", formData);
+const handleSubmit = async () => {
+  try {
+    await axios.post(
+      "https://livetraq-backend.onrender.com/api/customers/add",
+      formData,
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`
+        }
+      }
+    );
 
-            alert("Customer Saved ✅");
+    alert("Customer Saved ✅");
+    navigate("/customers");
 
-            navigate("/customers");
-            } 
-            catch (error) {
-                console.log(error);
-             }
+  } catch (err) {
+    console.error(err);
+
+    if (err.response && err.response.status === 401) {
+      alert("Session expired. Please login again.");
+      localStorage.removeItem("token");
+      navigate("/");
+    }
+  }
 };
   return (
     <div className="flex h-screen bg-gray-100">
