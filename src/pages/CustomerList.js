@@ -46,8 +46,8 @@ const handleDelete = async (id) => {
 
     alert("Customer deleted ❌");
 
-    // refresh list
-    setCustomers(customers.filter((_, index) => index !== id));
+    // remove from UI
+    setCustomers(customers.filter(c => c._id !== id));
 
   } catch (err) {
     console.error(err);
@@ -95,7 +95,7 @@ const handleDelete = async (id) => {
                   <button
                     onClick={(e) => {
                       e.stopPropagation();
-                      navigate(`/edit-customer/${index}`);
+                      navigate(`/edit-customer/${cust._id}`)
                     }}
                     className="bg-yellow-500 text-white px-2 py-1 mr-2 rounded"
                   >
@@ -105,7 +105,7 @@ const handleDelete = async (id) => {
                   <button
                     onClick={(e) => {
                       e.stopPropagation();
-                      handleDelete(index);
+                      handleDelete(cust._id)
                     }}
                     className="bg-red-500 text-white px-2 py-1 rounded"
                   >
