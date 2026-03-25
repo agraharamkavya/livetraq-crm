@@ -6,26 +6,41 @@ function EditCustomer() {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  const [formData, setFormData] = useState({});
+  const [formData, setFormData] = useState(null);
 
   // 🔥 Fetch customer from backend
   useEffect(() => {
     const fetchCustomer = async () => {
-      const res = await axios.get(
-        "https://livetraq-backend.onrender.com/api/customers",
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`
+      try {
+        const res = await axios.get(
+          "https://livetraq-backend.onrender.com/api/customers",
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`
+            }
           }
-        }
-      );
+        );
 
-      const customer = res.data.find(c => c._id === id);
-      setFormData(customer);
+        // ✅ safer match
+        const customer = res.data.find(
+          (c) => c._id.toString() === id.toString()
+        );
+
+        if (customer) {
+          setFormData(customer);
+        } else {
+          alert("Customer not found ❌");
+          navigate("/customers");
+        }
+
+      } catch (err) {
+        console.error(err);
+        alert("Error loading customer ❌");
+      }
     };
 
     fetchCustomer();
-  }, [id]);
+  }, [id, navigate]);
 
   const handleChange = (e) => {
     setFormData({
@@ -34,21 +49,32 @@ function EditCustomer() {
     });
   };
 
-  // 🔥 Update via API (NOT localStorage)
+  // 🔥 Update via API
   const handleUpdate = async () => {
-    await axios.put(
-      `https://livetraq-backend.onrender.com/api/customers/${id}`,
-      formData,
-      {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`
+    try {
+      await axios.put(
+        `https://livetraq-backend.onrender.com/api/customers/${id}`,
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`
+          }
         }
-      }
-    );
+      );
 
-    alert("Customer Updated ✏️");
-    navigate("/customers");
+      alert("Customer Updated ✏️");
+      navigate("/customers");
+
+    } catch (err) {
+      console.error(err);
+      alert("Update failed ❌");
+    }
   };
+
+  // ✅ Loading state (VERY IMPORTANT)
+  if (!formData) {
+    return <div className="text-center mt-10">Loading...</div>;
+  }
 
   return (
     <div className="p-6 max-w-xl mx-auto bg-white shadow rounded">
@@ -57,7 +83,7 @@ function EditCustomer() {
 
       <input
         name="name"
-        value={formData?.name || ""}
+        value={formData.name || ""}
         onChange={handleChange}
         placeholder="Name"
         className="w-full mb-3 p-2 border rounded"
@@ -65,7 +91,7 @@ function EditCustomer() {
 
       <input
         name="imei"
-        value={formData?.imei || ""}
+        value={formData.imei || ""}
         onChange={handleChange}
         placeholder="IMEI"
         className="w-full mb-3 p-2 border rounded"
@@ -73,7 +99,7 @@ function EditCustomer() {
 
       <input
         name="phone"
-        value={formData?.phone || ""}
+        value={formData.phone || ""}
         onChange={handleChange}
         placeholder="Phone"
         className="w-full mb-3 p-2 border rounded"

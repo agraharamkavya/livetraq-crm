@@ -6,11 +6,38 @@ function CustomerList() {
   const [customers, setCustomers] = useState([]);
   const navigate = useNavigate();
 
- useEffect(() => {
-  const fetchCustomers = async () => {
+  useEffect(() => {
+    const fetchCustomers = async () => {
+      try {
+        const res = await axios.get(
+          "https://livetraq-backend.onrender.com/api/customers",
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`
+            }
+          }
+        );
+
+        setCustomers(res.data);
+
+      } catch (err) {
+        console.error(err);
+
+        if (err.response && err.response.status === 401) {
+          alert("Session expired. Please login again.");
+          localStorage.removeItem("token");
+          navigate("/");
+        }
+      }
+    };
+
+    fetchCustomers();
+  }, [navigate]);
+
+  const handleDelete = async (id) => {
     try {
-      const res = await axios.get(
-        "https://livetraq-backend.onrender.com/api/customers",
+      await axios.delete(
+        `https://livetraq-backend.onrender.com/api/customers/${id}`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`
@@ -18,41 +45,14 @@ function CustomerList() {
         }
       );
 
-      setCustomers(res.data);
+      alert("Customer deleted ❌");
+
+      setCustomers(customers.filter(c => c._id !== id));
+
     } catch (err) {
       console.error(err);
-
-      // 🔥 If token invalid → redirect to login
-      if (err.response && err.response.status === 401) {
-        alert("Session expired. Please login again.");
-        localStorage.removeItem("token");
-        navigate("/");
-      }
     }
   };
-
-  fetchCustomers();
-}, []);
-const handleDelete = async (id) => {
-  try {
-    await axios.delete(
-      `https://livetraq-backend.onrender.com/api/customers/${id}`,
-      {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`
-        }
-      }
-    );
-
-    alert("Customer deleted ❌");
-
-    // remove from UI
-    setCustomers(customers.filter(c => c._id !== id));
-
-  } catch (err) {
-    console.error(err);
-  }
-};
 
   return (
     <div className="flex h-screen bg-gray-100">
@@ -80,22 +80,23 @@ const handleDelete = async (id) => {
           </thead>
 
           <tbody>
-            {customers.map((cust, index) => (
+            {customers.map((cust) => (
               <tr
-                key={index}
-                onClick={() => navigate(`/customer/${index}`)}
+                key={cust._id}
+                onClick={() => navigate(`/customer/${cust._id}`)} // ✅ FIXED
                 className="text-center border-t cursor-pointer hover:bg-gray-100"
-                >
+              >
                 <td className="p-2">{cust.name}</td>
                 <td className="p-2">{cust.imei}</td>
                 <td className="p-2">{cust.sim}</td>
                 <td className="p-2">{cust.phone}</td>
                 <td className="p-2">{cust.dealer}</td>
+
                 <td className="p-2">
                   <button
                     onClick={(e) => {
                       e.stopPropagation();
-                      navigate(`/edit-customer/${cust._id}`)
+                      navigate(`/edit-customer/${cust._id}`);
                     }}
                     className="bg-yellow-500 text-white px-2 py-1 mr-2 rounded"
                   >
@@ -105,7 +106,7 @@ const handleDelete = async (id) => {
                   <button
                     onClick={(e) => {
                       e.stopPropagation();
-                      handleDelete(cust._id)
+                      handleDelete(cust._id);
                     }}
                     className="bg-red-500 text-white px-2 py-1 rounded"
                   >
