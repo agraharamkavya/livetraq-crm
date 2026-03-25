@@ -3,12 +3,11 @@ import { Navigate } from "react-router-dom";
 function ProtectedRoute({ children }) {
   const token = localStorage.getItem("token");
 
-  // ❌ If not logged in → redirect to login
-  if (!token) {
-    return <Navigate to="/" />;
+  // 🔥 Check properly
+  if (!token || token === "undefined") {
+    return <Navigate to="/" replace />;
   }
 
-  // ✅ If logged in → allow access
   return children;
 }
 

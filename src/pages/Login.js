@@ -19,7 +19,7 @@ function Login() {
 
       alert("Login successful ✅");
 
-      navigate("/dashboard");
+      navigate("/dashboard", { replace: true });
     } catch (error) {
       alert("Invalid credentials ❌");
     }

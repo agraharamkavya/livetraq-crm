@@ -33,6 +33,26 @@ function CustomerList() {
 
   fetchCustomers();
 }, []);
+const handleDelete = async (id) => {
+  try {
+    await axios.delete(
+      `https://livetraq-backend.onrender.com/api/customers/${id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`
+        }
+      }
+    );
+
+    alert("Customer deleted ❌");
+
+    // refresh list
+    setCustomers(customers.filter((_, index) => index !== id));
+
+  } catch (err) {
+    console.error(err);
+  }
+};
 
   return (
     <div className="flex h-screen bg-gray-100">
@@ -55,6 +75,7 @@ function CustomerList() {
               <th className="p-2">SIM</th>
               <th className="p-2">Phone</th>
               <th className="p-2">Dealer</th>
+              <th className="p-2">Actions</th>
             </tr>
           </thead>
 
@@ -70,6 +91,27 @@ function CustomerList() {
                 <td className="p-2">{cust.sim}</td>
                 <td className="p-2">{cust.phone}</td>
                 <td className="p-2">{cust.dealer}</td>
+                <td className="p-2">
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      navigate(`/edit-customer/${index}`);
+                    }}
+                    className="bg-yellow-500 text-white px-2 py-1 mr-2 rounded"
+                  >
+                    Edit
+                  </button>
+
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleDelete(index);
+                    }}
+                    className="bg-red-500 text-white px-2 py-1 rounded"
+                  >
+                    Delete
+                  </button>
+                </td>
               </tr>
             ))}
           </tbody>
