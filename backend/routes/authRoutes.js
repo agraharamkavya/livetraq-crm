@@ -13,7 +13,7 @@ router.post("/register", async (req, res) => {
   const user = new User({
     email,
     password: hashedPassword,
-    role:"admin"
+    role:"user"
   });
 
   await user.save();
