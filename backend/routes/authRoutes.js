@@ -12,7 +12,8 @@ router.post("/register", async (req, res) => {
 
   const user = new User({
     email,
-    password: hashedPassword
+    password: hashedPassword,
+    role:"admin"
   });
 
   await user.save();
@@ -32,7 +33,10 @@ router.post("/login", async (req, res) => {
 
   if (!isMatch) return res.status(400).json({ message: "Wrong password" });
 
-  const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
+  const token = jwt.sign(
+    { id: user._id, role: user.role },
+    process.env.JWT_SECRET
+     );
 
   res.json({ token });
 });
