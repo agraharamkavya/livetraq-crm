@@ -83,27 +83,43 @@ function EditCustomer() {
 
       <input
         name="name"
-        value={formData.name || ""}
+        value={formData?.name || ""}
         onChange={handleChange}
         placeholder="Name"
         className="w-full mb-3 p-2 border rounded"
       />
 
-      <input
-        name="imei"
-        value={formData.imei || ""}
-        onChange={handleChange}
-        placeholder="IMEI"
-        className="w-full mb-3 p-2 border rounded"
-      />
+    <input
+      name="imei"
+      value={formData?.imei || ""}
+      onChange={handleChange}
+      placeholder="IMEI"
+      className="w-full mb-3 p-2 border rounded"
+    />
 
-      <input
-        name="phone"
-        value={formData.phone || ""}
-        onChange={handleChange}
-        placeholder="Phone"
-        className="w-full mb-3 p-2 border rounded"
-      />
+    <input
+      name="sim"
+      value={formData?.sim || ""}
+      onChange={handleChange}
+      placeholder="SIM"
+      className="w-full mb-3 p-2 border rounded"
+    />
+
+    <input
+      name="phone"
+      value={formData?.phone || ""}
+      onChange={handleChange}
+      placeholder="Phone"
+      className="w-full mb-3 p-2 border rounded"
+    />
+
+    <input
+      name="dealer"
+      value={formData?.dealer || ""}
+      onChange={handleChange}
+      placeholder="Dealer"
+      className="w-full mb-3 p-2 border rounded"
+    />
 
       <button
         onClick={handleUpdate}
