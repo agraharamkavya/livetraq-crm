@@ -76,7 +76,9 @@ function CustomerList() {
               <th className="p-2">SIM</th>
               <th className="p-2">Phone</th>
               <th className="p-2">Dealer</th>
-              <th className="p-2">Actions</th>
+              {role === "admin" && (
+                  <th className="p-2">Actions</th>
+                )}
             </tr>
           </thead>
 
