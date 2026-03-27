@@ -5,6 +5,7 @@ import axios from "axios";
 function CustomerList() {
   const [customers, setCustomers] = useState([]);
   const navigate = useNavigate();
+  const role = localStorage.getItem("role");
 
   useEffect(() => {
     const fetchCustomers = async () => {
@@ -93,26 +94,30 @@ function CustomerList() {
                 <td className="p-2">{cust.dealer}</td>
 
                 <td className="p-2">
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      navigate(`/edit-customer/${cust._id}`);
-                    }}
-                    className="bg-yellow-500 text-white px-2 py-1 mr-2 rounded"
-                  >
-                    Edit
-                  </button>
+          {role === "admin" && (
+            <>
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  navigate(`/edit-customer/${cust._id}`);
+                }}
+                className="bg-yellow-500 text-white px-2 py-1 mr-2 rounded"
+              >
+                Edit
+              </button>
 
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleDelete(cust._id);
-                    }}
-                    className="bg-red-500 text-white px-2 py-1 rounded"
-                  >
-                    Delete
-                  </button>
-                </td>
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleDelete(cust._id);
+                }}
+                className="bg-red-500 text-white px-2 py-1 rounded"
+              >
+                Delete
+              </button>
+            </>
+          )}
+        </td>
               </tr>
             ))}
           </tbody>
