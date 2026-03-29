@@ -6,6 +6,7 @@ import CustomerList from "./pages/CustomerList";
 import CustomerDetails from "./pages/CustomerDetails";
 import EditCustomer from "./pages/EditCustomer";
 import ProtectedRoute from "./components/ProtectedRoute";
+import Inventory from "./pages/Inventory";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
       <Route path="/customers" element={<ProtectedRoute><CustomerList /></ProtectedRoute>} />
       <Route path="/customer/:id" element={<ProtectedRoute><CustomerDetails /></ProtectedRoute>} />
       <Route path="/edit-customer/:id" element={<ProtectedRoute><EditCustomer /></ProtectedRoute>} />
+      <Route path="/inventory" element={<ProtectedRoute><Inventory /></ProtectedRoute>}/>
     </Routes>
   );
 }
