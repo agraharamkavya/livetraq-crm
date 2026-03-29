@@ -67,7 +67,12 @@ function CustomerList() {
       <div className="flex-1 p-6">
 
         <h2 className="text-xl font-bold mb-4">Customer List</h2>
-
+      <button
+        onClick={() => navigate("/dashboard")}
+        className="mb-4 bg-gray-500 text-white px-4 py-2 rounded"
+      >
+        ← Back to Dashboard
+      </button>
         <table className="w-full bg-white shadow rounded">
           <thead className="bg-gray-200">
             <tr>

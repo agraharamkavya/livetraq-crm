@@ -32,9 +32,22 @@ function Dashboard() {
       <div className="flex-1 flex flex-col">
 
         {/* Topbar */}
-        <div className="bg-white p-4 shadow flex justify-between">
+        <div className="bg-white p-4 shadow flex justify-between items-center">
           <h1 className="text-xl font-semibold">Dashboard</h1>
-          <span>Kavya</span>
+
+          <div className="flex items-center gap-4">
+            <span>Kavya</span>
+
+            <button
+              onClick={() => {
+                localStorage.clear();
+                window.location.href = "/";
+              }}
+              className="bg-red-500 text-white px-3 py-1 rounded"
+            >
+              Logout
+            </button>
+          </div>
         </div>
 
         {/* Content */}
