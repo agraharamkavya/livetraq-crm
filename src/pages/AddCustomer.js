@@ -20,6 +20,13 @@ function AddCustomer() {
     });
     };
 const handleSubmit = async () => {
+  const { name, imei, sim, phone, dealer } = formData;
+
+  if (!name || !imei || !sim || !phone || !dealer) {
+    alert("All fields are required ❌");
+    return;
+  }
+
   try {
     await axios.post(
       "https://livetraq-backend.onrender.com/api/customers/add",
@@ -31,11 +38,12 @@ const handleSubmit = async () => {
       }
     );
 
-    alert("Customer Saved ✅");
+    alert("Customer Added ✅");
     navigate("/customers");
 
   } catch (err) {
     console.error(err);
+    alert("Error adding customer ❌");
 
     if (err.response && err.response.status === 401) {
       alert("Session expired. Please login again.");
@@ -70,48 +78,57 @@ const handleSubmit = async () => {
                  onChange={handleChange}
                  placeholder="Full Name"
                  className="w-full mb-3 p-2 border rounded"
+                 required
           />
           <input name="govtId"
                  value={formData.govtId}
                  onChange={handleChange}
                  placeholder="Govt ID"
                  className="w-full mb-3 p-2 border rounded"
+                 required
           />
           <input name="imei"
                  value={formData.imei}
                  onChange={handleChange}
                  placeholder="IMEI"
                  className="w-full mb-3 p-2 border rounded"
+                 required
           />
           <input name="sim"
                  value={formData.sim}
                  onChange={handleChange}
                  placeholder="SIM"
                  className="w-full mb-3 p-2 border rounded"
+                 required
+
           />
           <input name="email"
                  value={formData.email}
                  onChange={handleChange}
                  placeholder="Email"
                  className="w-full mb-3 p-2 border rounded"
+                 required
           />
           <input name="phone"
                  value={formData.phone}
                  onChange={handleChange}
                  placeholder="Phone"
                  className="w-full mb-3 p-2 border rounded"
+                 required
           />
           <input name="address"
                  value={formData.address}
                  onChange={handleChange}
                  placeholder="Address"
                  className="w-full mb-3 p-2 border rounded"
+                 required
           />
           <input name="dealer"
                  value={formData.dealer}
                  onChange={handleChange}
                  placeholder="Dealer"
                  className="w-full mb-3 p-2 border rounded"
+                 required
           />
           
           <button
