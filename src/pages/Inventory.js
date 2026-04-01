@@ -3,6 +3,7 @@ import {useState} from "react";
 
 function Inventory() {
   const navigate = useNavigate();
+  const [inventory,setInventory]=useState([]);
   const [formData,setFormData]=useState({
     device:"",
     model:"",
@@ -14,10 +15,20 @@ function Inventory() {
   const handleChange=(e)=>{
     setFormData({...formData,[e.target.name]:e.target.value});
   };
-  const handleAdd=()=>{
-    console.log(formData);
-  alert("Inventory added ✅ (temporary)");
-  };
+  const handleAdd = () => {
+  setInventory([...inventory, formData]); // ✅ store data
+
+  alert("Inventory added ✅");
+
+  // clear form
+  setFormData({
+    device: "",
+    model: "",
+    imei: "",
+    date: "",
+    location: ""
+  });
+};
 
   return (
     <div className="flex h-screen bg-gray-100">
@@ -103,13 +114,15 @@ function Inventory() {
           </thead>
 
           <tbody>
-            <tr className="text-center border-t">
-              <td className="p-2">Tracker</td>
-              <td className="p-2">LT-100</td>
-              <td className="p-2">123456789</td>
-              <td className="p-2">2026-03-29</td>
-              <td className="p-2">Hyderabad</td>
-            </tr>
+            {inventory.map((item, index) => (
+              <tr key={index} className="text-center border-t">
+                <td className="p-2">{item.device}</td>
+                <td className="p-2">{item.model}</td>
+                <td className="p-2">{item.imei}</td>
+                <td className="p-2">{item.date}</td>
+                <td className="p-2">{item.location}</td>
+              </tr>
+            ))}
           </tbody>
         </table>
 
