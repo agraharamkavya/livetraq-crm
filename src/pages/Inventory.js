@@ -1,7 +1,23 @@
 import { useNavigate } from "react-router-dom";
+import {useState} from "react";
 
 function Inventory() {
   const navigate = useNavigate();
+  const [formData,setFormData]=({
+    device:"",
+    model:"",
+    imei:"",
+    date:"",
+    location:""
+
+  });
+  const handleChange=(e)=>{
+    setFormData({...formData,[e.target.name]:e.target.value});
+  };
+  const handleAdd=()=>{
+    console.log(formData);
+  alert("Inventory added ✅ (temporary)");
+  };
 
   return (
     <div className="flex h-screen bg-gray-100">
@@ -27,6 +43,53 @@ function Inventory() {
       <div className="flex-1 p-6">
 
         <h2 className="text-xl font-bold mb-4">Inventory</h2>
+        <div className="bg-white p-4 rounded shadow mb-6">
+
+    <h3 className="text-lg font-semibold mb-4">Add Device</h3>
+
+      <input
+        name="device"
+        placeholder="Device"
+        onChange={handleChange}
+        className="w-full mb-2 p-2 border rounded"
+      />
+
+      <input
+        name="model"
+        placeholder="Device Model"
+        onChange={handleChange}
+        className="w-full mb-2 p-2 border rounded"
+      />
+
+      <input
+        name="imei"
+        placeholder="IMEI"
+        onChange={handleChange}
+        className="w-full mb-2 p-2 border rounded"
+      />
+
+      <input
+        type="date"
+        name="date"
+        onChange={handleChange}
+        className="w-full mb-2 p-2 border rounded"
+      />
+
+      <input
+        name="location"
+        placeholder="Location"
+        onChange={handleChange}
+        className="w-full mb-2 p-2 border rounded"
+      />
+
+      <button
+        onClick={handleAdd}
+        className="bg-green-600 text-white px-4 py-2 rounded mt-2"
+      >
+        Add Device
+      </button>
+
+    </div>
 
         <table className="w-full bg-white shadow rounded">
           <thead className="bg-gray-200">
