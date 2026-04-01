@@ -3,7 +3,7 @@ import {useState} from "react";
 
 function Inventory() {
   const navigate = useNavigate();
-  const [formData,setFormData]=({
+  const [formData,setFormData]=useState({
     device:"",
     model:"",
     imei:"",
