@@ -74,6 +74,27 @@ function Inventory() {
       alert("Error adding inventory ❌");
     }
   };
+  const handleDelete = async (id) => {
+  try {
+    await axios.delete(
+      `https://livetraq-backend.onrender.com/api/inventory/${id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`
+        }
+      }
+    );
+
+    // remove from UI
+    setInventory(inventory.filter(item => item._id !== id));
+
+    alert("Deleted successfully ❌");
+
+  } catch (err) {
+    console.error(err);
+    alert("Error deleting ❌");
+  }
+};
 
   return (
     <div className="flex h-screen bg-gray-100">
@@ -163,6 +184,7 @@ function Inventory() {
               <th className="p-2">IMEI</th>
               <th className="p-2">Date</th>
               <th className="p-2">Location</th>
+              <th className="p-2">Actions</th>
             </tr>
           </thead>
 
@@ -176,6 +198,15 @@ function Inventory() {
                   {new Date(item.date).toLocaleDateString()}
                 </td>
                 <td className="p-2">{item.location}</td>
+
+                <td className="p-2">
+                  <button
+                    onClick={() => handleDelete(item._id)}
+                    className="bg-red-500 text-white px-2 py-1 rounded"
+                  >
+                    Delete
+                  </button>
+                </td>
               </tr>
             ))}
           </tbody>
