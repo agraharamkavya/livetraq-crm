@@ -199,10 +199,12 @@ function Inventory() {
 
           <button
             onClick={handleAdd}
-            className="bg-green-600 text-white px-4 py-2 rounded mt-2"
+            className={`px-4 py-2 rounded mt-2 text-white ${
+              editingId ? "bg-yellow-500" : "bg-green-600"
+            }`}
           >
-            Add Device
-          </button>
+            {editingId ? "Update Device ✏️" : "Add Device"}
+          </button>   
 
         </div>
 
