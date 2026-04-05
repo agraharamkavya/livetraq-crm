@@ -19,12 +19,11 @@ function Dashboard() {
           <li className="cursor-pointer hover:bg-blue-500 p-2 rounded">
             Customer KYC
           </li>
-          <li
-          onClick={() => navigate("/inventory")}
-          className="cursor-pointer hover:bg-blue-500 p-2 rounded"
-          >
-            Inventory
-          </li>
+          {localStorage.getItem("role") === "admin" && (
+              <li onClick={() => navigate("/inventory")} className="cursor-pointer hover:bg-blue-500 p-2 rounded">
+                Inventory
+              </li>
+            )}
           <li className="cursor-pointer hover:bg-blue-500 p-2 rounded">
             Reports
           </li>

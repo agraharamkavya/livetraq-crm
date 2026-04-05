@@ -6,6 +6,7 @@ function Inventory() {
   const navigate = useNavigate();
 
   const [inventory, setInventory] = useState([]);
+  const [editingId, setEditingId] = useState(null);
 
   const [formData, setFormData] = useState({
     device: "",
@@ -43,10 +44,36 @@ function Inventory() {
       [e.target.name]: e.target.value
     });
   };
+  const handleEdit = (item) => {
+  setFormData(item);
+  setEditingId(item._id);
+   };
 
-  // 🔥 Save to backend
   const handleAdd = async () => {
-    try {
+  try {
+    if (editingId) {
+      // 👉 UPDATE
+      const res = await axios.put(
+        `https://livetraq-backend.onrender.com/api/inventory/${editingId}`,
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`
+          }
+        }
+      );
+
+      setInventory(
+        inventory.map(item =>
+          item._id === editingId ? res.data : item
+        )
+      );
+
+      alert("Updated successfully ✏️");
+      setEditingId(null);
+
+    } else {
+      // 👉 ADD
       const res = await axios.post(
         "https://livetraq-backend.onrender.com/api/inventory",
         formData,
@@ -59,21 +86,23 @@ function Inventory() {
 
       setInventory([...inventory, res.data]);
 
-      alert("Inventory added ✅");
-
-      setFormData({
-        device: "",
-        model: "",
-        imei: "",
-        date: "",
-        location: ""
-      });
-
-    } catch (err) {
-      console.error(err);
-      alert("Error adding inventory ❌");
+      alert("Added successfully ✅");
     }
-  };
+
+    // reset form
+    setFormData({
+      device: "",
+      model: "",
+      imei: "",
+      date: "",
+      location: ""
+    });
+
+  } catch (err) {
+    console.error(err);
+    alert("Error ❌");
+  }
+};
   const handleDelete = async (id) => {
   try {
     await axios.delete(
@@ -110,9 +139,11 @@ function Inventory() {
           <li onClick={() => navigate("/customers")} className="cursor-pointer hover:bg-blue-500 p-2 rounded">
             Customer List
           </li>
-          <li className="bg-blue-500 p-2 rounded">
-            Inventory
-          </li>
+          {localStorage.getItem("role") === "admin" && (
+              <li onClick={() => navigate("/inventory")} className="cursor-pointer hover:bg-blue-500 p-2 rounded">
+                Inventory
+              </li>
+            )}
         </ul>
       </div>
 
@@ -200,6 +231,12 @@ function Inventory() {
                 <td className="p-2">{item.location}</td>
 
                 <td className="p-2">
+                  <button
+                    onClick={() => handleEdit(item)}
+                    className="bg-yellow-500 text-white px-2 py-1 mr-2 rounded"
+                  >
+                    Edit
+                  </button>
                   <button
                     onClick={() => handleDelete(item._id)}
                     className="bg-red-500 text-white px-2 py-1 rounded"
