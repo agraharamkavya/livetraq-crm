@@ -16,9 +16,11 @@ function Dashboard() {
           <li className="cursor-pointer hover:bg-blue-500 p-2 rounded">
             Dashboard
           </li>
-          <li className="cursor-pointer hover:bg-blue-500 p-2 rounded">
+          
+          <li onClick={() => navigate("/customer-kyc")} className="cursor-pointer hover:bg-blue-500 p-2 rounded">
             Customer KYC
           </li>
+          
           {localStorage.getItem("role") === "admin" && (
               <li onClick={() => navigate("/inventory")} className="cursor-pointer hover:bg-blue-500 p-2 rounded">
                 Inventory
@@ -71,27 +73,6 @@ function Dashboard() {
             <h2 className="text-lg font-semibold mb-4">
               Welcome to Livetraq CRM
             </h2>
-
-           <button
-            onClick={() => navigate("/add-customer")}
-            className="bg-blue-600 text-white px-4 py-2 rounded mr-4"
-            >
-            Add New Customer
-            </button>
-
-            <button
-            onClick={() => navigate("/customers")}
-            className="bg-green-600 text-white px-4 py-2 rounded mr-4"
-            >
-            View Customer List
-            </button>
-
-            <button
-            onClick={handleLogout}
-            className="bg-red-500 text-white px-4 py-2 rounded"
-             >
-            Logout
-            </button>
           </div>
 
         </div>
