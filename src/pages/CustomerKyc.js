@@ -1,11 +1,10 @@
+
 import { useNavigate } from "react-router-dom";
 import {
   UserPlus,
   List,
   Users,
   BadgeCheck,
-  Search,
-  Filter,
 } from "lucide-react";
 
 const CustomerKyc = () => {
@@ -100,79 +99,30 @@ const CustomerKyc = () => {
           </button>
         </div>
 
-        {/* SEARCH SECTION */}
-        <div className="px-8 pb-8">
-          <div className="bg-gray-50 border border-gray-200 rounded-2xl p-4 flex flex-col md:flex-row gap-4 items-center">
+        {/* BUTTONS */}
+        <div className="px-8 pb-8 flex flex-wrap gap-4">
+          <button
+            onClick={() => navigate("/add-customer")}
+            className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-xl flex items-center gap-2 shadow-md transition-all"
+          >
+            <UserPlus size={20} />
+            Add New Customer
+          </button>
 
-            <div className="flex-1 relative w-full">
-              <Search
-                className="absolute left-4 top-3.5 text-gray-400"
-                size={18}
-              />
-
-              <input
-                type="text"
-                placeholder="Search by name, phone or IMEI..."
-                className="w-full pl-11 pr-4 py-3 rounded-xl border border-gray-200 outline-none focus:ring-2 focus:ring-blue-500"
-              />
-            </div>
-
-            <button className="px-5 py-3 rounded-xl border border-gray-200 bg-white flex items-center gap-2 hover:bg-gray-100 transition-all">
-              <Filter size={18} />
-              Filter
-            </button>
-          </div>
-        </div>
-
-        {/* TABLE */}
-        <div className="px-8 pb-8 overflow-x-auto">
-          <table className="w-full border border-gray-200 rounded-2xl overflow-hidden">
-            <thead className="bg-gray-50">
-              <tr>
-                <th className="text-left px-6 py-4 text-gray-600 font-semibold">
-                  Customer Name
-                </th>
-                <th className="text-left px-6 py-4 text-gray-600 font-semibold">
-                  Phone Number
-                </th>
-                <th className="text-left px-6 py-4 text-gray-600 font-semibold">
-                  IMEI
-                </th>
-                <th className="text-left px-6 py-4 text-gray-600 font-semibold">
-                  Status
-                </th>
-              </tr>
-            </thead>
-
-            <tbody>
-              <tr className="border-t border-gray-200 hover:bg-gray-50 transition-all">
-                <td className="px-6 py-5">
-                  <div>
-                    <h3 className="font-semibold text-gray-800">
-                      Kavya
-                    </h3>
-                    <p className="text-sm text-gray-500">
-                      kavya@email.com
-                    </p>
-                  </div>
-                </td>
-
-                <td className="px-6 py-5 text-gray-700">
-                  +91 9876543210
-                </td>
-
-                <td className="px-6 py-5 text-gray-700">
-                  356789012345678
-                </td>
-
-                <td className="px-6 py-5">
-                  <span className="bg-green-100 text-green-700 px-4 py-1 rounded-full text-sm font-medium">
-                    Verified
-                  </span>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+          <button
+            onClick={() => navigate("/customers")}
+            className="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-xl flex items-center gap-2 shadow-md transition-all"
+          >
+            <List size={20} />
+            View Customer List
+          </button>
+          <button
+            onClick={() => navigate("/dashboard")}
+            className="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-xl flex items-center gap-2 shadow-md transition-all"
+          >
+            <List size={20} />
+            Back
+          </button>
         </div>
       </div>
     </div>
@@ -180,3 +130,4 @@ const CustomerKyc = () => {
 };
 
 export default CustomerKyc;
+
