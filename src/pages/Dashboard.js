@@ -6,6 +6,7 @@ function Dashboard() {
   const navigate = useNavigate();
   const [customers, setCustomers] = useState([]);
   const [inventory, setInventory] = useState([]);
+  const [activeSegment, setActiveSegment] = useState(null);
   const [searchOption, setSearchOption] = useState("IMEI");
   const [searchTerm, setSearchTerm] = useState("");
   const [isLoading, setIsLoading] = useState(true);
@@ -203,20 +204,49 @@ function Dashboard() {
 
             <div className="bg-white p-5 rounded shadow grid gap-6 lg:grid-cols-[1.2fr_1fr]">
               <div className="flex flex-col items-center justify-center gap-6">
-                <div
-                  className="relative rounded-full w-64 h-64"
-                  style={{
-                    background: `conic-gradient(${pieGradient})`
-                  }}
-                >
-                  <div className="absolute inset-0 m-10 rounded-full bg-white shadow-inner" />
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="text-center">
-                      <div className="text-3xl font-bold text-gray-800">{inventory.length}</div>
-                      <div className="text-sm text-gray-500">Devices</div>
-                    </div>
+                <div className="relative w-64 h-64">
+  {pieSegments.map((segment, index) => {
+    const isActive = activeSegment === segment.key;
+
+    return (
+      <div
+        key={segment.key}
+        onClick={() => setActiveSegment(segment.key)}
+        className={`absolute inset-0 rounded-full cursor-pointer transition-all duration-300 ${
+          isActive ? "scale-110 shadow-2xl" : ""
+        }`}
+        style={{
+          background: `conic-gradient(
+            transparent 0% ${segment.start}%,
+            ${segment.segmentColor} ${segment.start}% ${segment.end}%,
+            transparent ${segment.end}% 100%
+          )`,
+          zIndex: index + 1,
+          opacity: isActive ? 1 : 0.9
+        }}
+      />
+    );
+  })}
+
+    <div className="absolute inset-0 m-10 rounded-full bg-white shadow-inner z-20" />
+
+      <div className="absolute inset-0 flex items-center justify-center z-30">
+        <div className="text-center">
+             <div className="text-3xl font-bold text-gray-800">
+                      {inventory.length}
+                  </div>
+                    <div className="text-sm text-gray-500">Devices</div>
+
+                        {activeSegment && (
+                        <div className="mt-2 text-xs font-semibold text-blue-600">
+                        {
+                          stats.find((s) => s.key === activeSegment)?.label
+                        }
+                        </div>
+                    )}
                   </div>
                 </div>
+               </div>
                 <p className="text-sm text-gray-600 text-center">
                   This chart represents the current dashboard totals. Click any stat below to jump to the related page.
                 </p>
