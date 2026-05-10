@@ -228,9 +228,9 @@ function Dashboard() {
     );
   })}
 
-    <div className="absolute inset-0 m-10 rounded-full bg-white shadow-inner z-20" />
+    <div className="absolute inset-0 m-10 rounded-full bg-white shadow-inner z-20" style={{ pointerEvents:"none"}}/>
 
-      <div className="absolute inset-0 flex items-center justify-center z-30">
+      <div className="absolute inset-0 flex items-center justify-center z-30" style={{ pointerEvents:"none"}}>
         <div className="text-center">
              <div className="text-3xl font-bold text-gray-800">
                       {inventory.length}
