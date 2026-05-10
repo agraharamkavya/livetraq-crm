@@ -220,6 +220,14 @@ function Dashboard() {
                 <p className="text-sm text-gray-600 text-center">
                   This chart represents the current dashboard totals. Click any stat below to jump to the related page.
                 </p>
+                <div className="w-full grid gap-2">
+                  {stats.map((stat) => (
+                    <div key={stat.key} className="flex items-center gap-3 text-sm text-gray-700">
+                      <span className={`inline-block w-3 h-3 rounded-full bg-gradient-to-br ${stat.buttonClass}`} />
+                      <span>{stat.label}</span>
+                    </div>
+                  ))}
+                </div>
               </div>
 
               <div className="grid grid-cols-1 gap-4">
@@ -227,14 +235,15 @@ function Dashboard() {
                   <button
                     key={stat.key}
                     onClick={() => navigate(stat.route)}
-                    className="group bg-gradient-to-r p-5 rounded-xl shadow hover:shadow-lg transition-all flex items-center justify-between gap-4"
+                    className="group bg-white p-5 rounded-xl shadow hover:shadow-lg transition-all flex items-center justify-between gap-4"
                   >
                     <div>
-                      <p className="text-sm text-white/80">{stat.label}</p>
-                      <p className="mt-2 text-3xl font-bold text-white">{stat.value}</p>
+                      <p className="text-sm text-gray-700">{stat.label}</p>
+                      <p className="mt-2 text-2xl font-bold text-gray-900">{stat.value}</p>
                     </div>
-                    <div className={`w-16 h-16 rounded-full bg-gradient-to-br ${stat.buttonClass} flex items-center justify-center`}>
+                    <div className={`w-20 h-20 rounded-full bg-gradient-to-br ${stat.buttonClass} flex flex-col items-center justify-center text-center p-2`}>
                       <span className="text-white text-sm font-semibold">{Math.round((stat.value / totalPieItems) * 100)}%</span>
+                      <span className="text-[10px] leading-tight text-white/80 mt-1">{stat.label}</span>
                     </div>
                   </button>
                 ))}
