@@ -98,24 +98,6 @@ const CustomerKyc = () => {
             View Customer List
           </button>
         </div>
-
-        {/* BUTTONS */}
-        <div className="px-8 pb-8 flex flex-wrap gap-4">
-          <button
-            onClick={() => navigate("/add-customer")}
-            className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-xl flex items-center gap-2 shadow-md transition-all"
-          >
-            <UserPlus size={20} />
-            Add New Customer
-          </button>
-
-          <button
-            onClick={() => navigate("/customers")}
-            className="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-xl flex items-center gap-2 shadow-md transition-all"
-          >
-            <List size={20} />
-            View Customer List
-          </button>
           <button
             onClick={() => navigate("/dashboard")}
             className="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-xl flex items-center gap-2 shadow-md transition-all"
@@ -125,7 +107,7 @@ const CustomerKyc = () => {
           </button>
         </div>
       </div>
-    </div>
+  
   );
 };
 
